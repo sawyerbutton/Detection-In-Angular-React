@@ -323,6 +323,23 @@ export class RatingComponent extends ReactComponent {
 1. 明确告诉框架某些`事情,属性,对象`发生了变化,或者`有可能发生变化`,因此它应该运行变更检测
 2. 依靠框架来知晓何时有可能发生变化并`自动运行变更检测`
 
+##### React只有一种方式
+
+> 在React中总是通过调用`setState函数`手动初始化变更检测过程,没有自动触发变更检测的方式
+
+```javascript
+export class RatingComponent extends React.Component {
+    //...
+    handleClick(event) {
+        this.setState({rating: Number(event.target.dataset.value)})
+    };
+}
+```
+
+> 每个变更检测周期都从调用`setState函数`开始
+> 值得注意的是，`setState函数`是一个请求也可以理解为一个异步函数，它并不会立刻更新组件
+> 在React中，为了效率等原因可能会延迟这个过程在后续的`VM turn`中执行之
+
 ##### 在Angular中拥有两种方式
 
 > 可以使用`Change Detector service`手动执行变更检测
